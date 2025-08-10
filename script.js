@@ -2,11 +2,11 @@ const form = document.getElementById('todo-form'); // get the form element
 const input = document.getElementById('todo-input'); // get the input element
 const list = document.getElementById('todo-list'); // get the list element
 const deleteElement = document.getElementById('todo-remover'); // get the delete element
-const deleteAllElements = document.getElementById('todo-remover-all') // get the delete all element
+//const deleteAllElements = document.getElementById('todo-remover-all') // get the delete all element
 const markAll = document.getElementById('todo-mark-all'); // get the mark all element
 const unmarkAll = document.getElementById('todo-unmark-all'); // get the unmark all element
 let tasks = JSON.parse(localStorage.getItem('tasks')) || []; // Get memory from localStorage
-
+renderTasks();
 
 /* 
 Here are the "backend" functions handled with localStorage
@@ -17,7 +17,7 @@ function renderTasks(){
     tasks.forEach((task, index)=>{
 
         const li = document.createElement('li');
-
+        li.className = 'list-group-item d-flex align-items-center'
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.checked = task.completed;
@@ -66,16 +66,17 @@ form.addEventListener('submit',(e)=>{
 deleteElement.addEventListener('click', function(event){
     event.preventDefault();
     tasks = tasks.filter((task)=> !task.completed);
+    saveTasks();
     renderTasks();
 })
 
 //Delete all tasks
-deleteAllElements.addEventListener('click', function(event){
+/*deleteAllElements.addEventListener('click', function(event){
     event.preventDefault();
     localStorage.clear();
     tasks=[];
     renderTasks();
-})
+})*/
 
 markAll.addEventListener('click', ()=>{
     tasks.forEach(task => task.completed = true);
@@ -86,5 +87,3 @@ unmarkAll.addEventListener('click', ()=>{
     tasks.forEach(task => task.completed = false);
     renderTasks();
 })
-
-renderTasks();
